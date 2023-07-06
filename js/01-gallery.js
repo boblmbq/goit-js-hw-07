@@ -19,24 +19,31 @@ const photoEl = galleryItems
   .join(" ");
 ulEl.innerHTML = photoEl;
 
+ulEl.addEventListener("click", onImgClick);
+
+//? removing default changes on link
+const allLinkBigImg = document.querySelectorAll(".gallery__link");
+allLinkBigImg.forEach((a) =>
+  a.addEventListener("click", (e) => e.preventDefault())
+);
+
 //? getting big url after img click
 function onImgClick(event) {
-  const modal = basicLightbox.create(
-    `
+  if (event.target.tagName === "IMG") {
+    const modal = basicLightbox.create(
+      `
     <img src="${event.target.dataset.source}"></img>
     `,
-    {
-      onShow: () => {
-        document.addEventListener("keyup", evBinded);
-      },
-      onClose: () => {
-        document.removeEventListener("keyup", evBinded);
-      },
-    }
-  );
-  const evBinded = ev.bind(modal);
-
-  if (event.target.tagName === "IMG") {
+      {
+        onShow: () => {
+          document.addEventListener("keyup", evBinded);
+        },
+        onClose: () => {
+          document.removeEventListener("keyup", evBinded);
+        },
+      }
+    );
+    const evBinded = ev.bind(modal);
     modal.show();
   }
 }
@@ -45,10 +52,3 @@ function ev(e) {
     this.close();
   }
 }
-ulEl.addEventListener("click", onImgClick);
-
-//? removing default changes on link
-const allLinkBigImg = document.querySelectorAll(".gallery__link");
-allLinkBigImg.forEach((a) =>
-  a.addEventListener("click", (e) => e.preventDefault())
-);

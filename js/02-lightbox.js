@@ -14,11 +14,6 @@ const ulMarkup = galleryItems
   .join(" ");
 ulEl.insertAdjacentHTML("beforeend", ulMarkup);
 
-//? disabling default behavior
-ulEl
-  .querySelectorAll(".gallery__link")
-  .forEach((a) => a.addEventListener("click", (e) => e.preventDefault()));
-
 const gallery = new SimpleLightbox(".gallery a", {
   captions: true,
   captionSelector: "img",
